@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 
 import SearchBox from "@/components/SearchBox/SearchBox";
@@ -32,6 +32,8 @@ export default function NotesClient() {
         search,
         perPage: 12,
       }),
+
+    placeholderData: keepPreviousData, // ✅ REQUIRED FIX
   });
 
   return (

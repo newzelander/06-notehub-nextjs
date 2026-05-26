@@ -29,27 +29,27 @@ export const fetchNotes = async ({
   search,
   perPage,
 }: FetchNotesParams): Promise<FetchNotesResponse> => {
-  const { data } = await axios.get("/notes", {
+  const { data } = await axios.get<FetchNotesResponse>("/notes", {
     params: { page, search, perPage },
   });
 
   return data;
 };
 
-// GET single note (SSR requirement)
+// GET single note
 export const fetchNoteById = async (id: string): Promise<Note> => {
-  const { data } = await axios.get(`/notes/${id}`);
+  const { data } = await axios.get<Note>(`/notes/${id}`);
   return data;
 };
 
 // CREATE
 export const createNote = async (note: CreateNoteData): Promise<Note> => {
-  const { data } = await axios.post("/notes", note);
+  const { data } = await axios.post<Note>("/notes", note);
   return data;
 };
 
 // DELETE
 export const deleteNote = async (id: string): Promise<Note> => {
-  const { data } = await axios.delete(`/notes/${id}`);
+  const { data } = await axios.delete<Note>(`/notes/${id}`);
   return data;
 };
