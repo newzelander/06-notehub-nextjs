@@ -10,8 +10,6 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const modalRoot = document.body;
-
 export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -31,10 +29,13 @@ export default function Modal({ children, onClose }: ModalProps) {
     if (e.target === e.currentTarget) onClose();
   };
 
+  // SSR safety (this is the key fix)
+  if (typeof window === "undefined") return null;
+
   return createPortal(
     <div className={css.backdrop} onClick={handleBackdrop}>
       <div className={css.modal}>{children}</div>
     </div>,
-    modalRoot,
+    document.body,
   );
 }
